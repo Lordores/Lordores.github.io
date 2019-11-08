@@ -107,6 +107,7 @@
           }
         }
       }
+	    
       function SetMaterial(gui, mesh, geometry){
         var material = new THREE.MeshPhysicalMaterial( { color: 0x2194CE, morphTargets: true,side: THREE.DoubleSide,} );
         guiMeshPhysicalMaterial( gui, mesh, material, geometry );
@@ -116,31 +117,28 @@
       function guiMeshPhysicalMaterial( gui, mesh, material, geometry ){
         var folder = gui.addFolder( 'THREE.MeshPhysicalMaterial' );
         folder.add( material, 'roughness', 0, 1 );
-				folder.add( material, 'metalness', 0, 1 );
-				folder.add( material, 'reflectivity', 0, 1 );
-				folder.add( material, 'clearcoat', 0, 1 ).step( 0.01 );
-				folder.add( material, 'clearcoatRoughness', 0, 1 ).step( 0.01 );
-				folder.add( material, 'flatShading' ).onChange( needsUpdate( material, geometry ) );
-				folder.add( material, 'wireframe' );
-				folder.add( material, 'wireframeLinewidth', 0, 10 );
+	folder.add( material, 'metalness', 0, 1 );
+	folder.add( material, 'reflectivity', 0, 1 );
+	folder.add( material, 'clearcoat', 0, 1 ).step( 0.01 );
+	folder.add( material, 'clearcoatRoughness', 0, 1 ).step( 0.01 );
+	folder.add( material, 'flatShading' ).onChange( needsUpdate( material, geometry ) );
+	folder.add( material, 'wireframe' );
+	folder.add( material, 'wireframeLinewidth', 0, 10 );
 		
         folder.add( material, 'fog' );
         folder.open();
       }
-			function needsUpdate( material, geometry ) {
-
-				return function () {
-
-					material.vertexColors = parseInt( material.vertexColors ); //Ensure number
-					material.side = parseInt( material.side ); //Ensure number
-					material.needsUpdate = true;
-					geometry.attributes.position.needsUpdate = true;
-					geometry.attributes.normal.needsUpdate = true;
-					geometry.attributes.color.needsUpdate = true;
-
-				};
-
-			}
+	    
+      function needsUpdate( material, geometry ) {
+        return function () {
+	  material.vertexColors = parseInt( material.vertexColors ); //Ensure number
+	  material.side = parseInt( material.side ); //Ensure number
+	  material.needsUpdate = true;
+	  geometry.attributes.position.needsUpdate = true;
+	  geometry.attributes.normal.needsUpdate = true;
+	  geometry.attributes.color.needsUpdate = true;
+	};
+      }
       function initGUI() {
         // Set up dat.GUI to control targets
         var params = {
