@@ -30,16 +30,16 @@
     var container, camera, scene, renderer, mesh
     function init() {
       scene = new THREE.Scene();
-      scene.background = new THREE.Color( 0x444444 );
+      scene.background = new THREE.Color( 0xffffff );
       container = document.getElementById( 'container' );
-      camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 20 );
+      camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 100 );
       camera.position.z = 8;
       scene.add( camera );
 
       
       var controls = new OrbitControls( camera, container );
 
-      var ambientLight = new THREE.AmbientLight( 0x000000 );
+      var ambientLight = new THREE.AmbientLight( 0xffffff );
       scene.add( ambientLight );
 
 
@@ -47,16 +47,16 @@
       camera.add( pointLight );  
 
       var lights = [];
-      lights[ 0 ] = new THREE.PointLight( 0xffffff, 0.2, 0 );
-      lights[ 1 ] = new THREE.PointLight( 0xffffff, 0.2, 0 );
-      lights[ 2 ] = new THREE.PointLight( 0xffffff, 0.1, 0 );
+			lights[ 0 ] = new THREE.PointLight( 0xffffff, 0.2, 0 );
+			lights[ 1 ] = new THREE.PointLight( 0xffffff, 0.2, 0 );
+			lights[ 2 ] = new THREE.PointLight( 0xffffff, 0.1, 0 );
 
-      lights[ 0 ].position.set( 0, 200, 0 );
-      lights[ 1 ].position.set( 100, 200, 100 );
-      lights[ 2 ].position.set( - 100, - 200, - 100 );
+			lights[ 0 ].position.set( 0, 200, 0 );
+			lights[ 1 ].position.set( 100, 200, 100 );
+			lights[ 2 ].position.set( - 100, - 200, - 100 );
 
-      scene.add( lights[ 0 ] );
-      scene.add( lights[ 1 ] );
+			scene.add( lights[ 0 ] );
+			scene.add( lights[ 1 ] );
       scene.add( lights[ 2 ] );
       
       createGeometry(); 
@@ -73,7 +73,7 @@
       window.addEventListener( 'resize', onWindowResize, false );
 
       //
-      function createGeometry() {
+			function createGeometry() {
         var A_Geometry,B_Geometry;
         const objLoader = new OBJLoader2();
         
@@ -107,39 +107,40 @@
           }
         }
       }
-        
       function SetMaterial(gui, mesh, geometry){
-        var material = new THREE.MeshPhysicalMaterial( { color: 0x2194CE, morphTargets: true,side: THREE.DoubleSide,} );
+        var material = new THREE.MeshPhysicalMaterial( { color: 0x808080, morphTargets: true,side: THREE.DoubleSide,} );
         guiMeshPhysicalMaterial( gui, mesh, material, geometry );
         return material;
       }
-      
+
       function guiMeshPhysicalMaterial( gui, mesh, material, geometry ){
         var folder = gui.addFolder( 'THREE.MeshPhysicalMaterial' );
         folder.add( material, 'roughness', 0, 1 );
-        folder.add( material, 'metalness', 0, 1 );
-        folder.add( material, 'reflectivity', 0, 1 );
-        folder.add( material, 'clearcoat', 0, 1 ).step( 0.01 );
-        folder.add( material, 'clearcoatRoughness', 0, 1 ).step( 0.01 );
-        folder.add( material, 'flatShading' ).onChange( needsUpdate( material, geometry ) );
-        folder.add( material, 'wireframe' );
-        folder.add( material, 'wireframeLinewidth', 0, 10 );
-        
+				folder.add( material, 'metalness', 0, 1 );
+				folder.add( material, 'reflectivity', 0, 1 );
+				folder.add( material, 'clearcoat', 0, 1 ).step( 0.01 );
+				folder.add( material, 'clearcoatRoughness', 0, 1 ).step( 0.01 );
+				folder.add( material, 'flatShading' ).onChange( needsUpdate( material, geometry ) );
+				folder.add( material, 'wireframe' );
+				folder.add( material, 'wireframeLinewidth', 0, 10 );
+		
         folder.add( material, 'fog' );
         folder.open();
       }
-      
-      function needsUpdate( material, geometry ) {
-        return function () {
-            material.vertexColors = parseInt( material.vertexColors ); //Ensure number
-            material.side = parseInt( material.side ); //Ensure number
-            material.needsUpdate = true;
-            geometry.attributes.position.needsUpdate = true;
-            geometry.attributes.normal.needsUpdate = true;
-            geometry.attributes.color.needsUpdate = true;
-        };
-      }
-      
+			function needsUpdate( material, geometry ) {
+
+				return function () {
+
+					material.vertexColors = parseInt( material.vertexColors ); //Ensure number
+					material.side = parseInt( material.side ); //Ensure number
+					material.needsUpdate = true;
+					geometry.attributes.position.needsUpdate = true;
+					geometry.attributes.normal.needsUpdate = true;
+					geometry.attributes.color.needsUpdate = true;
+
+				};
+
+			}
       function initGUI() {
         // Set up dat.GUI to control targets
         var params = {
@@ -153,6 +154,8 @@
           mesh.morphTargetInfluences[0] = value;
 
         } );
+
+
         folder.open();
       }
 
