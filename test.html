@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Three.js - Load .OBJ</title>
+    <title>Three.js - Load File .OBJ</title>
     <!--<style>
     html, body {
         margin: 0;
@@ -20,6 +20,7 @@
   <body>
     <div id="container"></div>
     <canvas id="c"></canvas>
+
     <script type="module">
     import * as THREE from './js/build/three.module.js';
 
@@ -30,8 +31,9 @@
     var container, camera, scene, renderer, mesh
     function init() {
       scene = new THREE.Scene();
-      scene.background = new THREE.Color( 0xffffff );
+      scene.background =  null;
       container = document.getElementById( 'container' );
+
       camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 100 );
       camera.position.z = 8;
       scene.add( camera );
@@ -43,7 +45,7 @@
       scene.add( ambientLight );
 
 
-      var pointLight = new THREE.PointLight( 0xffffff, 1, 0 );
+      var pointLight = new THREE.PointLight( 0xffffff, 0.4, 0 );
       camera.add( pointLight );  
 
       var lights = [];
@@ -61,14 +63,20 @@
       
       createGeometry(); 
 
-      renderer = new THREE.WebGLRenderer( { antialias: true } );
+      
+      renderer = new THREE.WebGLRenderer( { antialias: true,preserveDrawingBuffer: true } );
       renderer.setPixelRatio( window.devicePixelRatio );
       renderer.setSize( window.innerWidth, window.innerHeight );
 
       renderer.setAnimationLoop( function () {
+        renderer.clear();
+        
+        var img = new Image("image/jpeg");
+        img.src = renderer.domElement.toDataURL();//转化为base64
+        //window.location.href= img.src;
         renderer.render( scene, camera );
+        
       } );
-
       container.appendChild( renderer.domElement );
       window.addEventListener( 'resize', onWindowResize, false );
 
@@ -77,7 +85,7 @@
         var A_Geometry,B_Geometry;
         const objLoader = new OBJLoader2();
         
-        objLoader.load('01.obj', obj1);
+        objLoader.load('dd.obj', obj1);
         function obj1(object3D) {
           A_Geometry = object3D.children[0].geometry;
           A_Geometry.scale(8,8,8);
@@ -99,7 +107,7 @@
             geometry_A  = new THREE.BufferGeometry().fromGeometry( geometry_A );
             
             mesh = new THREE.Mesh( geometry_A );
-           
+            
             var gui = new GUI();
             mesh.material = SetMaterial(gui, mesh, geometry_A);
             scene.add( mesh );
@@ -171,6 +179,8 @@
         return center;
       }
     }
+
+
 
     init()
 
