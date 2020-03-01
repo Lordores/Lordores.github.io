@@ -85,7 +85,7 @@
         var A_Geometry,B_Geometry;
         const objLoader = new OBJLoader2();
         
-        objLoader.load('dd.obj', obj1);
+        objLoader.load('26400-02.obj', obj1);
         function obj1(object3D) {
           A_Geometry = object3D.children[0].geometry;
           A_Geometry.scale(8,8,8);
@@ -93,7 +93,7 @@
           A_Geometry.translate ( -center.x, -center.y, -center.z ); 
 
           const objLoader2 = new OBJLoader2();
-          objLoader2.load('dd2.obj', obj2);
+          objLoader2.load('27769-09.obj', obj2);
           function obj2(object3D) {
             B_Geometry = object3D.children[0].geometry;
             B_Geometry.scale(8,8,8);
